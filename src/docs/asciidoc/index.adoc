@@ -5,6 +5,8 @@
 :toc: left
 :toclevels: 1
 :sectlinks:
+:docinfodir: .asciidoctor
+:docinfo: shared
 
 == 회원가입
 
@@ -17,3 +19,17 @@ include::{snippets}/sign-up/request-fields.adoc[]
 === 응답
 
 include::{snippets}/sign-up/http-response.adoc[]
+
+== 로그인
+
+=== 요청
+
+include::{snippets}/login/http-request.adoc[]
+
+include::{snippets}/login/request-fields.adoc[]
+
+=== 응답
+
+include::{snippets}/login/http-response.adoc[]
+
+include::{snippets}/login/response-fields.adoc[]

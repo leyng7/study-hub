@@ -41,7 +41,8 @@ public class RestDocSetupTest {
                                         .remove("Cache-Control")
                                         .remove("Pragma")
                                         .remove("Expires")
-                                        .remove("X-Frame-Options")))
+                                        .remove("X-Frame-Options")
+                                        .remove("Content-Length")))
                 .build();
     }
 
