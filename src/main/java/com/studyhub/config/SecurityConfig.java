@@ -35,7 +35,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     private static final String[] AUTH_WHITELIST = {
-            "/", "/api/auth/**"
+            "/", "/docs/index.html", "/api/auth/**"
     };
 
     @Bean
