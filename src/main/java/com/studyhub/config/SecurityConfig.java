@@ -1,10 +1,12 @@
 package com.studyhub.config;
 
 import com.studyhub.domain.Member;
-import com.studyhub.jwt.*;
+import com.studyhub.jwt.JwtAccessDeniedHandler;
+import com.studyhub.jwt.JwtAuthenticationEntryPoint;
+import com.studyhub.jwt.JwtFilter;
+import com.studyhub.jwt.TokenProvider;
 import com.studyhub.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +15,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,7 +35,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     private static final String[] AUTH_WHITELIST = {
-            "/api/auth/**"
+            "/", "/api/auth/**"
     };
 
     @Bean
