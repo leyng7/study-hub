@@ -1,5 +1,6 @@
 package com.studyhub.domain;
 
+import io.jsonwebtoken.lang.Assert;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,7 +29,8 @@ public class Member implements Serializable {
     private Role role;
 
     @Builder
-    public Member(String username, String password, String nickname, Role role) {
+    private Member(String username, String password, String nickname, Role role) {
+        Assert.notNull(role, "권한은 필수입니다.");
         this.username = username;
         this.password = password;
         this.nickname = nickname;

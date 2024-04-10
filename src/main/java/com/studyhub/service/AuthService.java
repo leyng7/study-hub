@@ -3,6 +3,7 @@ package com.studyhub.service;
 import com.studyhub.config.UserPrincipal;
 import com.studyhub.domain.Member;
 import com.studyhub.domain.RefreshToken;
+import com.studyhub.domain.Role;
 import com.studyhub.repository.RefreshTokenRepository;
 import com.studyhub.request.Login;
 import com.studyhub.response.JwtResponse;
@@ -10,7 +11,6 @@ import com.studyhub.jwt.TokenProvider;
 import com.studyhub.repository.MemberRepository;
 import com.studyhub.request.SignUp;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -41,6 +41,7 @@ public class AuthService {
                 .username(signUp.getUsername())
                 .password(encryptedPassword)
                 .nickname(signUp.getNickname())
+                .role(Role.ROLE_USER)
                 .build();
 
         memberRepository.save(member);
@@ -49,15 +50,13 @@ public class AuthService {
 
     @Transactional
     public JwtResponse login(Login login) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getUsername(),  login.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        JwtResponse jwtResponse = tokenProvider.generateTokenDto(authentication);
-
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        JwtResponse jwtResponse = tokenProvider.generateJwt(authentication);
 
         RefreshToken refreshToken = RefreshToken.builder()
-                .memberId(principal.getMemberId())
+                .memberId(Long.valueOf(authentication.getName()))
                 .token(jwtResponse.getRefreshToken())
                 .build();
 
@@ -66,4 +65,24 @@ public class AuthService {
         return jwtResponse;
     }
 
+    public JwtResponse reissue(String accessToken, String refreshToken) {
+
+        if (!tokenProvider.validateToken(refreshToken)) {
+            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
+        }
+
+        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+
+        RefreshToken findRefreshToken = refreshTokenRepository.findById(Long.parseLong(authentication.getName()))
+            .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+
+         if (!findRefreshToken.getToken().equals(refreshToken)) {
+            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+        }
+
+        JwtResponse jwtResponse = tokenProvider.generateJwt(authentication);
+        findRefreshToken.updateToken(jwtResponse.getRefreshToken());
+
+        return jwtResponse;
+    }
 }

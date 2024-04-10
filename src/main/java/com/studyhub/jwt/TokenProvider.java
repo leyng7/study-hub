@@ -1,5 +1,6 @@
 package com.studyhub.jwt;
 
+import com.studyhub.config.UserPrincipal;
 import com.studyhub.response.JwtResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -36,7 +37,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public JwtResponse generateTokenDto(Authentication authentication) {
+    public JwtResponse generateJwt(Authentication authentication) {
         // 권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -44,27 +45,28 @@ public class TokenProvider {
 
         long now = (new Date()).getTime();
 
-        // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())       // payload "sub": "name"
-                .claim(AUTHORITIES_KEY, authorities)        // payload "auth": "ROLE_USER"
-                .setExpiration(accessTokenExpiresIn)        // payload "exp": 151621022 (ex)
-                .signWith(key, SignatureAlgorithm.HS512)    // header "alg": "HS512"
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
         // Refresh Token 생성
+        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                .setExpiration(refreshTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
         return JwtResponse.builder()
                 .tokenType(BEARER_TYPE)
                 .accessToken(accessToken)
-                .expiresIn(accessTokenExpiresIn.getTime() - now)
+                .expiresIn((accessTokenExpiresIn.getTime() - now) / 1000)
                 .refreshToken(refreshToken)
-                .refreshToken(refreshToken)
+                .refreshTokenExpiresIn((refreshTokenExpiresIn.getTime() - now) / 1000)
                 .build();
     }
 

@@ -17,3 +17,11 @@ Content-Type: application/json
   "password": "1q2w3e4r!"
 }
 
+### 재발급
+POST http://localhost:8080/api/auth/reissue
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjczMTYxOX0.kVDaL3o6FuiUzrO9M5kaYuT3u1vwX31JIhXsdhJ_KXtCD4v_byYsR3OdcHl_BW--hnOIF2NQa4SFTiitlXRYSA
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTMzMzQzOTl9.tSfwDhIFjp4oDFiFY0a9xf2swxBjGFoTxBgja6q9YissIa9Xm3lgU_P2z9673Nqu6A8ryZ4Fg8XmbViwo9wXIA"
+}

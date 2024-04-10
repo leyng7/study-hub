@@ -1,15 +1,16 @@
 package com.studyhub.controller;
 
+import com.studyhub.config.UserPrincipal;
 import com.studyhub.request.Login;
+import com.studyhub.request.ReissueJwt;
 import com.studyhub.response.JwtResponse;
 import com.studyhub.request.SignUp;
 import com.studyhub.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -34,9 +35,19 @@ public class AuthController {
         return ResponseEntity.ok(jwtResponse);
     }
 
-//    @PostMapping("/reissue")
-//    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-//        return ResponseEntity.ok(authService.reissue(tokenRequestDto));
-//    }
+    @PostMapping("/reissue")
+    public ResponseEntity<JwtResponse> reissue(
+            @RequestHeader("Authorization") String authorization,
+            @RequestBody ReissueJwt reissueJwt
+    ) {
+
+        if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer")) {
+            String accessToken = authorization.split(" ")[1].trim();
+            JwtResponse jwtResponse = authService.reissue(accessToken, reissueJwt.getRefreshToken());
+            return ResponseEntity.ok(jwtResponse);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
 
 }

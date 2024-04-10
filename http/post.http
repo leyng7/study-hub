@@ -1,0 +1,12 @@
+### 테스트
+GET http://localhost:8080/api/posts
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjczMTYxOX0.kVDaL3o6FuiUzrO9M5kaYuT3u1vwX31JIhXsdhJ_KXtCD4v_byYsR3OdcHl_BW--hnOIF2NQa4SFTiitlXRYSA
+Content-Type: application/json
+
+{}
+
+### 테스트
+GET http://localhost:8080/api/posts
+Content-Type: application/json
+
+{}
