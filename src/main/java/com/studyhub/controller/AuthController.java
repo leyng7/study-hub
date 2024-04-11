@@ -1,14 +1,13 @@
 package com.studyhub.controller;
 
-import com.studyhub.config.UserPrincipal;
 import com.studyhub.request.Login;
 import com.studyhub.request.ReissueJwt;
-import com.studyhub.response.JwtResponse;
 import com.studyhub.request.SignUp;
+import com.studyhub.response.JwtResponse;
 import com.studyhub.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,12 +37,12 @@ public class AuthController {
     @PostMapping("/reissue")
     public ResponseEntity<JwtResponse> reissue(
             @RequestHeader("Authorization") String authorization,
-            @RequestBody ReissueJwt reissueJwt
+            @RequestBody @Valid ReissueJwt reissueJwt
     ) {
 
         if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer")) {
             String accessToken = authorization.split(" ")[1].trim();
-            JwtResponse jwtResponse = authService.reissue(accessToken, reissueJwt.getRefreshToken());
+            JwtResponse jwtResponse = authService.reissue(accessToken, reissueJwt.refreshToken());
             return ResponseEntity.ok(jwtResponse);
         }
 
