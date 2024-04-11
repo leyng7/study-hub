@@ -7,7 +7,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithSecurityContextFactory;
 
@@ -34,9 +33,9 @@ public class StudyHubMockSecurityContext implements WithSecurityContextFactory<S
 
         memberRepository.save(member);
 
-        var user = new User(String.valueOf(member.getId()), member.getPassword(), List.of(new SimpleGrantedAuthority(member.getRole().name())));
+        var principal = new UserPrincipal(member.getId(), member.getPassword(), member.getRole());
 
-        var authenticationToken = new UsernamePasswordAuthenticationToken(user,
+        var authenticationToken = new UsernamePasswordAuthenticationToken(principal,
                 member.getPassword(),
                 List.of(new SimpleGrantedAuthority(member.getRole().name())));
 

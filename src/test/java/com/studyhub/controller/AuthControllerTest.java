@@ -1,6 +1,5 @@
 package com.studyhub.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyhub.config.RestDocSetupTest;
 import com.studyhub.config.StudyHubMockUser;
 import com.studyhub.repository.MemberRepository;
@@ -27,9 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 class AuthControllerTest extends RestDocSetupTest {
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private AuthService authService;

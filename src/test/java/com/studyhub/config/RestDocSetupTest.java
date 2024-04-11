@@ -1,7 +1,9 @@
 package com.studyhub.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -20,6 +23,9 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 @AutoConfigureRestDocs(uriScheme = "http", uriHost = "43.201.149.42", uriPort = 8080)
 @ExtendWith(RestDocumentationExtension.class)
 public class RestDocSetupTest {
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     protected MockMvc mockMvc;
 
@@ -43,6 +49,7 @@ public class RestDocSetupTest {
                                         .remove("Expires")
                                         .remove("X-Frame-Options")
                                         .remove("Content-Length")))
+                    .alwaysDo(document("{class-name}/{method-name}"))
                 .build();
     }
 

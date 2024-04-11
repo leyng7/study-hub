@@ -19,9 +19,9 @@ Content-Type: application/json
 
 ### 재발급
 POST http://localhost:8080/api/auth/reissue
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjczMTYxOX0.kVDaL3o6FuiUzrO9M5kaYuT3u1vwX31JIhXsdhJ_KXtCD4v_byYsR3OdcHl_BW--hnOIF2NQa4SFTiitlXRYSA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjg0NTA5MX0.bLDx14XtVAumMi_rvW_HbM1E76XI6TSmUvhax0_Q-3pZEM-4Tv4GG59y1L5ajomM2HT0vdyfJahDsYKCfmELrg
 Content-Type: application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTMzMzQzOTl9.tSfwDhIFjp4oDFiFY0a9xf2swxBjGFoTxBgja6q9YissIa9Xm3lgU_P2z9673Nqu6A8ryZ4Fg8XmbViwo9wXIA"
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTM0NDgwOTF9.7RqlcJiDI7kSBAI10xH98n_a6DMTxTMF2ZD1suUXlTA9BPsLpJWoVR_nFB6LuQVf8_k14l31tb2NwDIhCdhCSA"
 }
