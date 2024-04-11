@@ -5,11 +5,15 @@ import com.studyhub.config.RestDocSetupTest;
 import com.studyhub.config.StudyHubMockUser;
 import com.studyhub.repository.MemberRepository;
 import com.studyhub.request.Login;
+import com.studyhub.request.ReissueJwt;
 import com.studyhub.request.SignUp;
+import com.studyhub.response.JwtResponse;
+import com.studyhub.service.AuthService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -23,6 +27,9 @@ class AuthControllerTest extends RestDocSetupTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -86,6 +93,29 @@ class AuthControllerTest extends RestDocSetupTest {
                                 fieldWithPath("refreshTokenExpiresIn").description("refreshToken 만료시간(초), 7일")
                         )
                 ));
+    }
+
+    @Test
+    @StudyHubMockUser
+    @DisplayName("토큰 재발급")
+    void reissue() throws Exception {
+        // given
+        Login login = Login.builder()
+                .username("leyng7")
+                .password("1q2w3e4r!")
+                .build();
+
+        JwtResponse jwtResponse = authService.login(login);
+        ReissueJwt reissueJwt = ReissueJwt.of(jwtResponse.refreshToken());
+
+        // expected
+        mockMvc.perform(post("/api/auth/reissue")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtResponse.accessToken())
+                        .content(objectMapper.writeValueAsString(reissueJwt))
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+
     }
 
 

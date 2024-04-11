@@ -1,6 +1,5 @@
 package com.studyhub.service;
 
-import com.studyhub.config.UserPrincipal;
 import com.studyhub.domain.Member;
 import com.studyhub.domain.RefreshToken;
 import com.studyhub.domain.Role;
@@ -57,7 +56,7 @@ public class AuthService {
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .memberId(Long.valueOf(authentication.getName()))
-                .token(jwtResponse.getRefreshToken())
+                .token(jwtResponse.refreshToken())
                 .build();
 
         refreshTokenRepository.save(refreshToken);
@@ -81,7 +80,7 @@ public class AuthService {
         }
 
         JwtResponse jwtResponse = tokenProvider.generateJwt(authentication);
-        findRefreshToken.updateToken(jwtResponse.getRefreshToken());
+        findRefreshToken.updateToken(jwtResponse.refreshToken());
 
         return jwtResponse;
     }

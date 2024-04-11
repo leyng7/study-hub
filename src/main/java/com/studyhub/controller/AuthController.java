@@ -43,7 +43,7 @@ public class AuthController {
 
         if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer")) {
             String accessToken = authorization.split(" ")[1].trim();
-            JwtResponse jwtResponse = authService.reissue(accessToken, reissueJwt.getRefreshToken());
+            JwtResponse jwtResponse = authService.reissue(accessToken, reissueJwt.refreshToken());
             return ResponseEntity.ok(jwtResponse);
         }
 

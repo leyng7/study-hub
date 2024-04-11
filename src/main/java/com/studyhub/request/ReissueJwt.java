@@ -1,12 +1,11 @@
 package com.studyhub.request;
 
-import lombok.Data;
-import lombok.Getter;
+public record ReissueJwt(
+        String refreshToken
+) {
 
-@Data
-@Getter
-public class ReissueJwt {
-
-    private String refreshToken;
+    public static ReissueJwt of(String refreshToken) {
+        return new ReissueJwt(refreshToken);
+    }
 
 }
