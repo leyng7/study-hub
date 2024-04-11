@@ -38,12 +38,12 @@ include::{snippets}/login/response-fields.adoc[]
 
 === 요청
 
-include::{snippets}/login/http-request.adoc[]
+include::{snippets}/reissue/http-request.adoc[]
 
-include::{snippets}/login/request-fields.adoc[]
+include::{snippets}/reissue/request-fields.adoc[]
 
 === 응답
 
-include::{snippets}/login/http-response.adoc[]
+include::{snippets}/reissue/http-response.adoc[]
 
-include::{snippets}/login/response-fields.adoc[]
+include::{snippets}/reissue/response-fields.adoc[]

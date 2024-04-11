@@ -2,6 +2,7 @@ package com.studyhub.response;
 
 import lombok.Builder;
 
+@Builder
 public record JwtResponse(
         String tokenType,
         String accessToken,
@@ -9,9 +10,5 @@ public record JwtResponse(
         String refreshToken,
         long refreshTokenExpiresIn
 ) {
-
-    @Builder
-    public JwtResponse {
-    }
 
 }
