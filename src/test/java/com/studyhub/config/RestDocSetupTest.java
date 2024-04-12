@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -49,7 +48,7 @@ public class RestDocSetupTest {
                                         .remove("Expires")
                                         .remove("X-Frame-Options")
                                         .remove("Content-Length")))
-                    .alwaysDo(document("{class-name}/{method-name}"))
+//                    .alwaysDo(document("{class-name}/{method-name}"))
                 .build();
     }
 

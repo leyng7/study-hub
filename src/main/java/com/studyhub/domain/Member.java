@@ -37,4 +37,13 @@ public class Member implements Serializable {
         this.role = role;
     }
 
+    public MemberEditor.MemberEditorBuilder toEditor() {
+        return MemberEditor.builder()
+                .nickname(nickname);
+    }
+
+    public void edit(MemberEditor memberEditor) {
+        this.nickname = memberEditor.getNickname();
+    }
+
 }
