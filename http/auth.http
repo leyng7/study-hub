@@ -19,9 +19,16 @@ Content-Type: application/json
 
 ### 재발급
 POST http://localhost:8080/api/auth/reissue
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjg0NTA5MX0.bLDx14XtVAumMi_rvW_HbM1E76XI6TSmUvhax0_Q-3pZEM-4Tv4GG59y1L5ajomM2HT0vdyfJahDsYKCfmELrg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjg5MDU5NX0.UkAQtWqFX2hShnV1RIek0wLV2TUVKHpu9jLYpHMOhMtADaOcYZ5pOvfw_rlWpYybKqicGnHj3rT7FtHp9Czzdw
 Content-Type: application/json
 
 {
   "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3MTM0NDgwOTF9.7RqlcJiDI7kSBAI10xH98n_a6DMTxTMF2ZD1suUXlTA9BPsLpJWoVR_nFB6LuQVf8_k14l31tb2NwDIhCdhCSA"
 }
+
+### 탈퇴
+DELETE http://localhost:8080/api/members/me
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcxMjg5MTUzNn0.KhcehniEw0oroW_adH-mph6_RLe1yk6_MsnwlBg40XRjMhLCvhjw1mop-vVeTD5JRUJqikxvwSMObXU6KKrA0A
+Content-Type: application/json
+
+{}
