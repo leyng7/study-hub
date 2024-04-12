@@ -1,6 +1,7 @@
 package com.studyhub.config;
 
 import com.studyhub.domain.Member;
+import com.studyhub.expcetion.MemberNotFound;
 import com.studyhub.jwt.JwtAccessDeniedHandler;
 import com.studyhub.jwt.JwtAuthenticationEntryPoint;
 import com.studyhub.jwt.JwtFilter;
@@ -67,8 +68,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(MemberRepository memberRepository) {
         return username -> {
-            Member member = memberRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException(username + "을 찾을 수 없습니다."));
+            Member member = memberRepository.findByUsername(username).orElseThrow(MemberNotFound::new);
+
+            if (member.isRemoved()) {
+                throw new UsernameNotFoundException(username + "은 탈퇴한 회원입니다.");
+            }
 
             return new UserPrincipal(member.getId(), member.getPassword(), member.getRole());
         };

@@ -38,4 +38,16 @@ public class MemberService {
 
         member.edit(memberEditor);
     }
+
+    @Transactional
+    public void remove(Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFound::new);
+
+        MemberEditor.MemberEditorBuilder memberBuilder = member.toEditor();
+
+        MemberEditor memberEditor = memberBuilder.removed(true).build();
+
+        member.edit(memberEditor);
+    }
+
 }

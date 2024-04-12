@@ -35,5 +35,14 @@ public class MemberController {
         memberService.edit(principal.getMemberId(), request);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/me")
+    public void remove(
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+
+        memberService.remove(principal.getMemberId());
+    }
+
 
 }
