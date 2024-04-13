@@ -1,8 +1,9 @@
 package com.studyhub.config;
 
-import com.studyhub.domain.Member;
-import com.studyhub.domain.Role;
-import com.studyhub.repository.MemberRepository;
+import com.studyhub.infra.config.UserPrincipal;
+import com.studyhub.modules.member.domain.Member;
+import com.studyhub.modules.member.domain.Role;
+import com.studyhub.modules.member.repository.MemberRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;

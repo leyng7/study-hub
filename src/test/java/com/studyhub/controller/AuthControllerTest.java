@@ -2,12 +2,12 @@ package com.studyhub.controller;
 
 import com.studyhub.config.RestDocSetupTest;
 import com.studyhub.config.StudyHubMockUser;
-import com.studyhub.repository.MemberRepository;
-import com.studyhub.request.Login;
-import com.studyhub.request.ReissueJwt;
-import com.studyhub.request.SignUp;
-import com.studyhub.response.JwtResponse;
-import com.studyhub.service.AuthService;
+import com.studyhub.infra.request.ReissueJwt;
+import com.studyhub.infra.response.JwtResponse;
+import com.studyhub.infra.service.AuthService;
+import com.studyhub.modules.member.repository.MemberRepository;
+import com.studyhub.modules.member.request.Login;
+import com.studyhub.modules.member.request.SignUp;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
