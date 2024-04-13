@@ -2,11 +2,10 @@ package com.studyhub.modules.post.repository;
 
 import com.studyhub.modules.post.domain.Post;
 import com.studyhub.modules.post.request.PostSearch;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface PostRepositoryCustom {
 
-    List<Post> searchPosts(PostSearch postSearch);
+    Page<Post> searchPosts(PostSearch postSearch);
 
 }

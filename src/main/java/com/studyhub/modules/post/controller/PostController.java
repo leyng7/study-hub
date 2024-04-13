@@ -1,41 +1,43 @@
 package com.studyhub.modules.post.controller;
 
 import com.studyhub.infra.config.UserPrincipal;
-import com.studyhub.modules.post.domain.Post;
-import com.studyhub.modules.post.repository.PostRepository;
+import com.studyhub.infra.response.PagingResponse;
+import com.studyhub.modules.post.request.PostCreate;
 import com.studyhub.modules.post.request.PostSearch;
+import com.studyhub.modules.post.response.PostResponse;
+import com.studyhub.modules.post.service.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("")
-    public void write() {
-
+    public void write(
+            @RequestBody @Valid PostCreate request
+    ) {
+        request.validate();
+        postService.write(request);
     }
 
 
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
-    public List<Post> posts(
-            @AuthenticationPrincipal UserPrincipal principal
+    public PagingResponse<PostResponse> posts(
+            @AuthenticationPrincipal UserPrincipal principal,
+            PostSearch postSearch
     ) {
 
-        return postRepository.searchPosts(new PostSearch());
+        return postService.getPage(postSearch);
     }
 
 }

@@ -1,13 +1,15 @@
 package com.studyhub.modules.post.request;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class PostSearch {
 
@@ -19,12 +21,16 @@ public class PostSearch {
 
     @Builder
     public PostSearch(int page, int size) {
-        this.page = page;
-        this.size = size;
+        this.page = max(1, page);
+        this.size = min(size, 2000);
     }
 
     public long getOffset() {
-        return (long) (max(1, page) - 1) * min(size, 2000);
+        return (long) (page - 1) * size;
+    }
+
+    public Pageable getPageable() {
+        return PageRequest.of(page - 1, size);
     }
 
 }
