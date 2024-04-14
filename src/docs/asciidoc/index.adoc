@@ -85,3 +85,17 @@ include::{snippets}/members/remove/http-request.adoc[]
 include::{snippets}/members/remove/http-response.adoc[]
 
 == Posts
+
+=== 공부기록
+
+==== 요청
+
+include::{snippets}/posts/page/http-request.adoc[]
+
+include::{snippets}/posts/page/query-parameters.adoc[]
+
+==== 응답
+
+include::{snippets}/posts/page/http-response.adoc[]
+
+include::{snippets}/posts/page/response-fields.adoc[]

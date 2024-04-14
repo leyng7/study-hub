@@ -29,7 +29,7 @@ public class PostService {
     }
 
 
-    public PagingResponse<PostResponse> getPage(PostSearch postSearch) {
+    public PagingResponse<PostResponse> searchPosts(PostSearch postSearch) {
         Page<Post> postPage = postRepository.searchPosts(postSearch);
         return new PagingResponse<>(postPage, PostResponse.class);
     }

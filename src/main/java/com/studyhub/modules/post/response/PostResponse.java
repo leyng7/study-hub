@@ -11,12 +11,14 @@ public class PostResponse {
     private final Long id;
     private final String title;
     private final String content;
+    private final Long createdBy;
     private final LocalDateTime createdAt;
 
     public PostResponse(Post post) {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.createdBy = post.getCreatedBy();
         this.createdAt = post.getCreatedAt();
     }
 

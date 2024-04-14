@@ -37,7 +37,7 @@ public class PostController {
             PostSearch postSearch
     ) {
 
-        return postService.getPage(postSearch);
+        return postService.searchPosts(postSearch);
     }
 
 }
