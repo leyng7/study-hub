@@ -22,13 +22,12 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("")
     public void write(
+            @AuthenticationPrincipal UserPrincipal principal,
             @RequestBody @Valid PostCreate request
     ) {
         request.validate();
-        postService.write(request);
+        postService.write(principal.getMemberId(), request);
     }
-
-
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")

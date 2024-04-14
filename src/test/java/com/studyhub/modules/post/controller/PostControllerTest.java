@@ -4,6 +4,7 @@ import com.studyhub.config.RestDocSetupTest;
 import com.studyhub.config.StudyHubMockUser;
 import com.studyhub.modules.post.domain.Post;
 import com.studyhub.modules.post.repository.PostRepository;
+import com.studyhub.modules.post.request.PostCreate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -33,6 +35,68 @@ class PostControllerTest extends RestDocSetupTest {
     void clean() {
         postRepository.deleteAll();
     }
+
+    @Test
+    @StudyHubMockUser
+    @DisplayName("공부 등록")
+    void write() throws Exception {
+
+        // given
+        PostCreate newPost = PostCreate.builder()
+                .title("제목1")
+                .content("링크1")
+                .build();
+
+        // expected
+        mockMvc.perform(post("/api/posts")
+                        .content(objectMapper.writeValueAsString(newPost))
+                        .contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("posts/write",
+                        requestFields(
+                                fieldWithPath("title").description("제목"),
+                                fieldWithPath("content").description("링크").optional()
+                        )
+                ));
+
+
+        assertEquals(postRepository.count(), 1);
+    }
+
+
+    @Test
+    @StudyHubMockUser
+    @DisplayName("작성자마다 하루에 글 1개만 등록")
+    void write2() throws Exception {
+
+        // given
+        Post newPost1 = Post.builder()
+                .title("제목1")
+                .content("링크1")
+                .build();
+        postRepository.save(newPost1);
+
+        PostCreate newPost = PostCreate.builder()
+                .title("제목1")
+                .content("링크1")
+                .build();
+
+        // expected
+        mockMvc.perform(post("/api/posts")
+                        .content(objectMapper.writeValueAsString(newPost))
+                        .contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.message").value("이미 등록된 게시글이 있습니다."))
+                .andExpect(jsonPath("$.validation").exists())
+                .andDo(document("posts/write2"
+                ))
+        ;
+
+    }
+
 
     @Test
     @StudyHubMockUser

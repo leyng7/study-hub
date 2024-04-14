@@ -2,7 +2,6 @@ package com.studyhub.modules.post.request;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -10,14 +9,18 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 @Getter
-@NoArgsConstructor
 public class PostSearch {
 
     private static final int MAX_SIZE = 2000;
 
-    private int page = 1;
+    private final int page;
 
-    private int size = 20;
+    private final int size;
+
+    public PostSearch() {
+        this.page = 1;
+        this.size = 20;
+    }
 
     @Builder
     public PostSearch(int page, int size) {
