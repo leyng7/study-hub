@@ -85,3 +85,35 @@ include::{snippets}/members/remove/http-request.adoc[]
 include::{snippets}/members/remove/http-response.adoc[]
 
 == Posts
+
+=== 공부기록 등록
+
+==== 요청
+
+include::{snippets}/posts/write/http-request.adoc[]
+
+include::{snippets}/posts/write/request-fields.adoc[]
+
+==== 응답
+
+include::{snippets}/posts/write/http-response.adoc[]
+
+include::{snippets}/posts/write/response-fields.adoc[]
+
+==== 에러
+
+include::{snippets}/posts/write2/http-response.adoc[]
+
+=== 공부기록 페이지
+
+==== 요청
+
+include::{snippets}/posts/page/http-request.adoc[]
+
+include::{snippets}/posts/page/query-parameters.adoc[]
+
+==== 응답
+
+include::{snippets}/posts/page/http-response.adoc[]
+
+include::{snippets}/posts/page/response-fields.adoc[]

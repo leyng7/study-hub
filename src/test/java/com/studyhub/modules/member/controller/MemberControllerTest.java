@@ -1,4 +1,4 @@
-package com.studyhub.controller;
+package com.studyhub.modules.member.controller;
 
 import com.studyhub.config.RestDocSetupTest;
 import com.studyhub.config.StudyHubMockUser;

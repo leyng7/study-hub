@@ -3,6 +3,7 @@ package com.studyhub.modules.post.domain;
 import com.studyhub.infra.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,5 +22,11 @@ public class Post extends BaseEntity implements Serializable {
     private String title;
 
     private String content; // 링크 주소
+
+    @Builder
+    public Post(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
 }
